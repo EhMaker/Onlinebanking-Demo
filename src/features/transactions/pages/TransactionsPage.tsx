@@ -17,7 +17,6 @@ import {
   TrendingUpRounded,
   TrendingDownRounded,
 } from "@mui/icons-material";
-import { useAuthStore } from "@/features/auth/store/authStore";
 import { useAccount } from "@/features/banking/hooks/useAccount";
 import { useTransactions } from "@/features/banking/hooks/useTransactions";
 import { TransactionCard } from "@/features/banking/components/TransactionCard";
@@ -36,8 +35,7 @@ type StatusFilter = TransactionStatus | "all";
 // ---------------------------------------------------------------------------
 
 export function TransactionsPage() {
-  const user = useAuthStore((s) => s.user);
-  const { data: account, isLoading: accountLoading } = useAccount(user?.id);
+  const { data: account, isLoading: accountLoading } = useAccount();
   const { data: transactions = [], isLoading: txLoading } = useTransactions(
     account?.id,
     100, // load up to 100 for client-side filtering

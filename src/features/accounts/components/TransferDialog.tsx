@@ -190,13 +190,7 @@ export function TransferDialog({
   const parsedAmount = parseFloat(amount) || 0;
 
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      maxWidth="xs"
-      fullWidth
-      disableEscapeKeyDown={step === "processing"}
-    >
+    <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
       <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
         <SwapHorizRounded color="primary" />
         Send Money
@@ -264,7 +258,7 @@ export function TransferDialog({
               }
               fullWidth
               autoComplete="off"
-              inputProps={{ maxLength: 13 }}
+              slotProps={{ htmlInput: { maxLength: 13 } }}
               sx={{ mb: 2 }}
             />
 
@@ -276,8 +270,8 @@ export function TransferDialog({
               error={!!fieldErrors.amount}
               helperText={fieldErrors.amount}
               fullWidth
-              inputProps={{ min: 0.01, step: 0.01 }}
               slotProps={{
+                htmlInput: { min: 0.01, step: 0.01 },
                 input: {
                   startAdornment: (
                     <InputAdornment position="start">$</InputAdornment>
@@ -292,7 +286,7 @@ export function TransferDialog({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               fullWidth
-              inputProps={{ maxLength: 100 }}
+              slotProps={{ htmlInput: { maxLength: 100 } }}
               placeholder="e.g. Rent payment"
             />
           </DialogContent>
