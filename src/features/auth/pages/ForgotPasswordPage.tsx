@@ -41,7 +41,7 @@ export function ForgotPasswordPage() {
   if (sent) {
     return (
       <Box>
-        <Typography variant="h5" fontWeight={700} mb={1}>
+        <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
           Reset link sent
         </Typography>
         <Alert severity="success" sx={{ mb: 3 }}>
@@ -56,10 +56,10 @@ export function ForgotPasswordPage() {
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate>
-      <Typography variant="h5" fontWeight={700} mb={0.5}>
+      <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5 }}>
         Forgot password?
       </Typography>
-      <Typography variant="body2" color="text.secondary" mb={3}>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
         Enter your email and we'll send a reset link.
       </Typography>
 

@@ -83,10 +83,10 @@ export function ResetPasswordPage() {
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate>
-      <Typography variant="h5" fontWeight={700} mb={0.5}>
+      <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5 }}>
         Set new password
       </Typography>
-      <Typography variant="body2" color="text.secondary" mb={3}>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
         Enter a strong new password for your account.
       </Typography>
 

@@ -65,7 +65,7 @@ export function Topbar({
         </IconButton>
 
         {/* Page title */}
-        <Typography variant="h6" fontWeight={700} sx={{ flexGrow: 1 }}>
+        <Typography variant="h6" sx={{ fontWeight: 700, flexGrow: 1 }}>
           {title}
         </Typography>
 

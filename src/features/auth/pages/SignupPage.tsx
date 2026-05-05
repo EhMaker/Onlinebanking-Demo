@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
   TextField,
   Button,
   Typography,
-  Link,
   Alert,
   IconButton,
   InputAdornment,
@@ -16,7 +15,6 @@ import { VisibilityRounded, VisibilityOffRounded } from "@mui/icons-material";
 import { useAuthStore } from "@/features/auth/store/authStore";
 
 export function SignupPage() {
-  const navigate = useNavigate();
   const { signup, isLoading, error, clearError } = useAuthStore();
 
   const [fullName, setFullName] = useState("");
@@ -67,7 +65,7 @@ export function SignupPage() {
   if (signedUp) {
     return (
       <Box>
-        <Typography variant="h5" fontWeight={700} mb={1}>
+        <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
           Check your inbox
         </Typography>
         <Alert severity="success" sx={{ mb: 3 }}>
@@ -89,10 +87,10 @@ export function SignupPage() {
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate>
-      <Typography variant="h5" fontWeight={700} mb={0.5}>
+      <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5 }}>
         Create your account
       </Typography>
-      <Typography variant="body2" color="text.secondary" mb={3}>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
         Join SmExPay — it's free
       </Typography>
 
