@@ -147,9 +147,16 @@ export function TransferDialog({
     // Live recipient lookup
     setLookupError("");
     setLookupLoading(true);
-    const target = await fetchAccountByNumber(toAccountNumber.trim()).catch(
-      () => null,
-    );
+    let target: Account | null = null;
+    try {
+      target = await fetchAccountByNumber(toAccountNumber.trim());
+    } catch (err) {
+      setLookupLoading(false);
+      const msg =
+        err instanceof Error ? err.message : "Lookup failed. Please retry.";
+      setLookupError(msg);
+      return;
+    }
     setLookupLoading(false);
 
     if (!target) {
