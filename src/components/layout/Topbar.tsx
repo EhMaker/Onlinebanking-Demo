@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
   AppBar,
@@ -16,6 +17,8 @@ import {
 } from "@mui/icons-material";
 import { useAuthStore } from "@/features/auth/store/authStore";
 import { useThemeStore } from "@/stores/themeStore";
+import { useNotifications } from "@/hooks/useNotifications";
+import { NotificationsPopover } from "@/components/notifications/NotificationsPopover";
 
 const PAGE_TITLES: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -41,6 +44,10 @@ export function Topbar({
 
   const { user, profile } = useAuthStore();
   const { mode, toggleMode } = useThemeStore();
+  const { notifications, unreadCount, isLoading, markRead, markAllAsRead } =
+    useNotifications();
+
+  const [notifAnchor, setNotifAnchor] = useState<HTMLElement | null>(null);
   const displayName =
     profile?.full_name ?? user?.user_metadata?.full_name ?? user?.email ?? "";
   const initials = displayName
@@ -89,12 +96,25 @@ export function Topbar({
 
         {/* Notifications */}
         <Tooltip title="Notifications">
-          <IconButton aria-label="notifications">
-            <Badge badgeContent={3} color="error">
+          <IconButton
+            aria-label="notifications"
+            onClick={(e) => setNotifAnchor(e.currentTarget)}
+          >
+            <Badge badgeContent={unreadCount} color="error" max={99}>
               <NotificationsOutlined />
             </Badge>
           </IconButton>
         </Tooltip>
+
+        <NotificationsPopover
+          anchorEl={notifAnchor}
+          onClose={() => setNotifAnchor(null)}
+          notifications={notifications}
+          unreadCount={unreadCount}
+          isLoading={isLoading}
+          onMarkRead={markRead}
+          onMarkAllRead={markAllAsRead}
+        />
 
         {/* User avatar */}
         <Tooltip title={displayName || "Account"}>
