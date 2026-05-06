@@ -8,8 +8,14 @@ import {
   Badge,
   Tooltip,
 } from "@mui/material";
-import { MenuRounded, NotificationsOutlined } from "@mui/icons-material";
+import {
+  MenuRounded,
+  NotificationsOutlined,
+  DarkModeRounded,
+  LightModeRounded,
+} from "@mui/icons-material";
 import { useAuthStore } from "@/features/auth/store/authStore";
+import { useThemeStore } from "@/stores/themeStore";
 
 const PAGE_TITLES: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -34,6 +40,7 @@ export function Topbar({
   const title = PAGE_TITLES[location.pathname] ?? "SmExPay";
 
   const { user, profile } = useAuthStore();
+  const { mode, toggleMode } = useThemeStore();
   const displayName =
     profile?.full_name ?? user?.user_metadata?.full_name ?? user?.email ?? "";
   const initials = displayName
@@ -68,6 +75,17 @@ export function Topbar({
         <Typography variant="h6" sx={{ fontWeight: 700, flexGrow: 1 }}>
           {title}
         </Typography>
+
+        {/* Dark / Light mode toggle */}
+        <Tooltip
+          title={
+            mode === "dark" ? "Switch to light mode" : "Switch to dark mode"
+          }
+        >
+          <IconButton onClick={toggleMode} aria-label="toggle color mode">
+            {mode === "dark" ? <LightModeRounded /> : <DarkModeRounded />}
+          </IconButton>
+        </Tooltip>
 
         {/* Notifications */}
         <Tooltip title="Notifications">

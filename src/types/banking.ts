@@ -53,3 +53,50 @@ export interface TransferParams {
   amount: number;
   description?: string;
 }
+
+// ---------------------------------------------------------------------------
+// Cards
+// ---------------------------------------------------------------------------
+
+export type CardNetwork = "visa" | "mastercard";
+export type CardStatus = "active" | "frozen" | "blocked";
+export type CardTxCategory =
+  | "shopping"
+  | "dining"
+  | "travel"
+  | "entertainment"
+  | "utilities"
+  | "healthcare"
+  | "fuel"
+  | "other";
+
+export interface Card {
+  id: string;
+  userId: string;
+  accountId: string;
+  cardholderName: string;
+  /** Full 16-digit number, shown masked in UI */
+  number: string;
+  /** MM/YY */
+  expiry: string;
+  cvv: string;
+  network: CardNetwork;
+  status: CardStatus;
+  nickname: string;
+  /** Monthly spending limit in USD, null = unlimited */
+  spendingLimit: number | null;
+  createdAt: string;
+}
+
+export interface CardTransaction {
+  id: string;
+  cardId: string;
+  accountId: string;
+  merchant: string;
+  category: CardTxCategory;
+  amount: number;
+  currency: string;
+  status: "approved" | "declined";
+  declineReason?: string;
+  createdAt: string;
+}

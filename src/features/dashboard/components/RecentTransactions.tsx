@@ -2,6 +2,10 @@ import { Box, Typography, Paper, Skeleton, Button, Alert } from "@mui/material";
 import { ReceiptLongRounded } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { TransactionCard } from "@/features/banking/components/TransactionCard";
+import {
+  AnimatedList,
+  AnimatedListItem,
+} from "@/components/motion/AnimatedList";
 import type { Transaction } from "@/types/banking";
 
 interface RecentTransactionsProps {
@@ -91,14 +95,18 @@ export function RecentTransactions({
           </Box>
         )}
 
-        {!isLoading &&
-          transactions?.map((tx) => (
-            <TransactionCard
-              key={tx.id}
-              transaction={tx}
-              currentAccountId={accountId}
-            />
-          ))}
+        {!isLoading && transactions && transactions.length > 0 && (
+          <AnimatedList>
+            {transactions.map((tx) => (
+              <AnimatedListItem key={tx.id}>
+                <TransactionCard
+                  transaction={tx}
+                  currentAccountId={accountId}
+                />
+              </AnimatedListItem>
+            ))}
+          </AnimatedList>
+        )}
       </Box>
     </Paper>
   );

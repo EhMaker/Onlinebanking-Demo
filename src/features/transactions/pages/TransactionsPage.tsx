@@ -22,6 +22,11 @@ import { useTransactions } from "@/features/banking/hooks/useTransactions";
 import { TransactionCard } from "@/features/banking/components/TransactionCard";
 import { signedAmount } from "@/types/banking";
 import type { TransactionType, TransactionStatus } from "@/types/banking";
+import { PageTransition } from "@/components/motion/PageTransition";
+import {
+  AnimatedList,
+  AnimatedListItem,
+} from "@/components/motion/AnimatedList";
 
 // ---------------------------------------------------------------------------
 // Filter types
@@ -85,256 +90,261 @@ export function TransactionsPage() {
   }
 
   return (
-    <Box>
-      {/* Header */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
-        <SwapHorizRounded color="primary" />
-        <Typography variant="h5" sx={{ fontWeight: 700 }}>
-          Transactions
-        </Typography>
-      </Box>
-
-      {/* Summary chips */}
-      {!isLoading && account && (
-        <Box sx={{ display: "flex", gap: 2, mb: 3, flexWrap: "wrap" }}>
-          <Paper
-            elevation={0}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              px: 2,
-              py: 1.5,
-              borderRadius: 2,
-              border: "1px solid",
-              borderColor: "divider",
-              flex: 1,
-              minWidth: 160,
-            }}
-          >
-            <TrendingUpRounded sx={{ color: "success.main", fontSize: 28 }} />
-            <Box>
-              <Typography variant="caption" color="text.secondary">
-                Total In
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{ fontWeight: 700, color: "success.main" }}
-              >
-                {formatMoney(totalIn)}
-              </Typography>
-            </Box>
-          </Paper>
-
-          <Paper
-            elevation={0}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              px: 2,
-              py: 1.5,
-              borderRadius: 2,
-              border: "1px solid",
-              borderColor: "divider",
-              flex: 1,
-              minWidth: 160,
-            }}
-          >
-            <TrendingDownRounded sx={{ color: "error.main", fontSize: 28 }} />
-            <Box>
-              <Typography variant="caption" color="text.secondary">
-                Total Out
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{ fontWeight: 700, color: "error.main" }}
-              >
-                {formatMoney(totalOut)}
-              </Typography>
-            </Box>
-          </Paper>
-
-          <Paper
-            elevation={0}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              px: 2,
-              py: 1.5,
-              borderRadius: 2,
-              border: "1px solid",
-              borderColor: "divider",
-              flex: 1,
-              minWidth: 160,
-            }}
-          >
-            <SwapHorizRounded sx={{ color: "primary.main", fontSize: 28 }} />
-            <Box>
-              <Typography variant="caption" color="text.secondary">
-                Showing
-              </Typography>
-              <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                {filtered.length}{" "}
-                <Typography
-                  component="span"
-                  variant="caption"
-                  color="text.secondary"
-                >
-                  / {transactions.length}
-                </Typography>
-              </Typography>
-            </Box>
-          </Paper>
+    <PageTransition>
+      <Box>
+        {/* Header */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
+          <SwapHorizRounded color="primary" />
+          <Typography variant="h5" sx={{ fontWeight: 700 }}>
+            Transactions
+          </Typography>
         </Box>
-      )}
 
-      {/* Filter row */}
-      <Paper
-        elevation={0}
-        sx={{
-          p: 2,
-          mb: 2,
-          borderRadius: 2,
-          border: "1px solid",
-          borderColor: "divider",
-          display: "flex",
-          gap: 2,
-          flexWrap: "wrap",
-          alignItems: "center",
-        }}
-      >
-        {/* Type filter */}
-        <ToggleButtonGroup
-          value={typeFilter}
-          exclusive
-          onChange={(_, v) => v && setTypeFilter(v as TypeFilter)}
-          size="small"
-        >
-          <ToggleButton value="all">All</ToggleButton>
-          <ToggleButton value="transfer">Transfers</ToggleButton>
-          <ToggleButton value="deposit">Deposits</ToggleButton>
-          <ToggleButton value="withdrawal">Withdrawals</ToggleButton>
-        </ToggleButtonGroup>
+        {/* Summary chips */}
+        {!isLoading && account && (
+          <Box sx={{ display: "flex", gap: 2, mb: 3, flexWrap: "wrap" }}>
+            <Paper
+              elevation={0}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                px: 2,
+                py: 1.5,
+                borderRadius: 2,
+                border: "1px solid",
+                borderColor: "divider",
+                flex: 1,
+                minWidth: 160,
+              }}
+            >
+              <TrendingUpRounded sx={{ color: "success.main", fontSize: 28 }} />
+              <Box>
+                <Typography variant="caption" color="text.secondary">
+                  Total In
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: 700, color: "success.main" }}
+                >
+                  {formatMoney(totalIn)}
+                </Typography>
+              </Box>
+            </Paper>
 
-        {/* Status filter */}
-        <TextField
-          select
-          size="small"
-          label="Status"
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
-          sx={{ minWidth: 130 }}
-        >
-          <MenuItem value="all">All statuses</MenuItem>
-          <MenuItem value="completed">Completed</MenuItem>
-          <MenuItem value="pending">Pending</MenuItem>
-          <MenuItem value="failed">Failed</MenuItem>
-        </TextField>
+            <Paper
+              elevation={0}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                px: 2,
+                py: 1.5,
+                borderRadius: 2,
+                border: "1px solid",
+                borderColor: "divider",
+                flex: 1,
+                minWidth: 160,
+              }}
+            >
+              <TrendingDownRounded sx={{ color: "error.main", fontSize: 28 }} />
+              <Box>
+                <Typography variant="caption" color="text.secondary">
+                  Total Out
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: 700, color: "error.main" }}
+                >
+                  {formatMoney(totalOut)}
+                </Typography>
+              </Box>
+            </Paper>
 
-        {/* Search */}
-        <TextField
-          size="small"
-          label="Search"
-          placeholder="Description or amount…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          sx={{ flex: 1, minWidth: 180 }}
-        />
-      </Paper>
+            <Paper
+              elevation={0}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                px: 2,
+                py: 1.5,
+                borderRadius: 2,
+                border: "1px solid",
+                borderColor: "divider",
+                flex: 1,
+                minWidth: 160,
+              }}
+            >
+              <SwapHorizRounded sx={{ color: "primary.main", fontSize: 28 }} />
+              <Box>
+                <Typography variant="caption" color="text.secondary">
+                  Showing
+                </Typography>
+                <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                  {filtered.length}{" "}
+                  <Typography
+                    component="span"
+                    variant="caption"
+                    color="text.secondary"
+                  >
+                    / {transactions.length}
+                  </Typography>
+                </Typography>
+              </Box>
+            </Paper>
+          </Box>
+        )}
 
-      {/* Transaction list */}
-      <Paper
-        elevation={0}
-        sx={{
-          borderRadius: 2,
-          border: "1px solid",
-          borderColor: "divider",
-          overflow: "hidden",
-        }}
-      >
-        <Box
+        {/* Filter row */}
+        <Paper
+          elevation={0}
           sx={{
-            px: 2,
-            py: 1.5,
+            p: 2,
+            mb: 2,
+            borderRadius: 2,
+            border: "1px solid",
+            borderColor: "divider",
             display: "flex",
+            gap: 2,
+            flexWrap: "wrap",
             alignItems: "center",
-            justifyContent: "space-between",
           }}
         >
-          <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-            Transaction History
-          </Typography>
-          {filtered.length > 0 && (
-            <Chip
-              label={`${filtered.length} record${filtered.length !== 1 ? "s" : ""}`}
-              size="small"
-              variant="outlined"
-            />
-          )}
-        </Box>
-        <Divider />
+          {/* Type filter */}
+          <ToggleButtonGroup
+            value={typeFilter}
+            exclusive
+            onChange={(_, v) => v && setTypeFilter(v as TypeFilter)}
+            size="small"
+          >
+            <ToggleButton value="all">All</ToggleButton>
+            <ToggleButton value="transfer">Transfers</ToggleButton>
+            <ToggleButton value="deposit">Deposits</ToggleButton>
+            <ToggleButton value="withdrawal">Withdrawals</ToggleButton>
+          </ToggleButtonGroup>
 
-        {/* Loading skeletons */}
-        {isLoading && (
-          <Box sx={{ px: 2 }}>
-            {Array.from({ length: 6 }).map((_, i) => (
-              <Box
-                key={i}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                  py: 1.5,
-                  borderBottom: "1px solid",
-                  borderColor: "divider",
-                }}
-              >
-                <Skeleton variant="circular" width={44} height={44} />
-                <Box sx={{ flex: 1 }}>
-                  <Skeleton width="60%" height={16} />
-                  <Skeleton width="40%" height={12} sx={{ mt: 0.5 }} />
-                </Box>
-                <Skeleton width={80} height={16} />
-              </Box>
-            ))}
-          </Box>
-        )}
+          {/* Status filter */}
+          <TextField
+            select
+            size="small"
+            label="Status"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
+            sx={{ minWidth: 130 }}
+          >
+            <MenuItem value="all">All statuses</MenuItem>
+            <MenuItem value="completed">Completed</MenuItem>
+            <MenuItem value="pending">Pending</MenuItem>
+            <MenuItem value="failed">Failed</MenuItem>
+          </TextField>
 
-        {/* Error / empty states */}
-        {!isLoading && !account && (
-          <Alert severity="warning" sx={{ m: 2 }}>
-            No account found. Please contact support.
-          </Alert>
-        )}
+          {/* Search */}
+          <TextField
+            size="small"
+            label="Search"
+            placeholder="Description or amount…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            sx={{ flex: 1, minWidth: 180 }}
+          />
+        </Paper>
 
-        {!isLoading && account && filtered.length === 0 && (
-          <Box sx={{ py: 6, textAlign: "center" }}>
-            <SwapHorizRounded
-              sx={{ fontSize: 48, color: "text.disabled", mb: 1 }}
-            />
-            <Typography color="text.secondary">
-              {transactions.length === 0
-                ? "No transactions yet. Send money to get started."
-                : "No transactions match your filters."}
+        {/* Transaction list */}
+        <Paper
+          elevation={0}
+          sx={{
+            borderRadius: 2,
+            border: "1px solid",
+            borderColor: "divider",
+            overflow: "hidden",
+          }}
+        >
+          <Box
+            sx={{
+              px: 2,
+              py: 1.5,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+              Transaction History
             </Typography>
-          </Box>
-        )}
-
-        {/* List */}
-        {!isLoading && account && filtered.length > 0 && (
-          <Box sx={{ px: 2 }}>
-            {filtered.map((tx) => (
-              <TransactionCard
-                key={tx.id}
-                transaction={tx}
-                currentAccountId={account.id}
+            {filtered.length > 0 && (
+              <Chip
+                label={`${filtered.length} record${filtered.length !== 1 ? "s" : ""}`}
+                size="small"
+                variant="outlined"
               />
-            ))}
+            )}
           </Box>
-        )}
-      </Paper>
-    </Box>
+          <Divider />
+
+          {/* Loading skeletons */}
+          {isLoading && (
+            <Box sx={{ px: 2 }}>
+              {Array.from({ length: 6 }).map((_, i) => (
+                <Box
+                  key={i}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    py: 1.5,
+                    borderBottom: "1px solid",
+                    borderColor: "divider",
+                  }}
+                >
+                  <Skeleton variant="circular" width={44} height={44} />
+                  <Box sx={{ flex: 1 }}>
+                    <Skeleton width="60%" height={16} />
+                    <Skeleton width="40%" height={12} sx={{ mt: 0.5 }} />
+                  </Box>
+                  <Skeleton width={80} height={16} />
+                </Box>
+              ))}
+            </Box>
+          )}
+
+          {/* Error / empty states */}
+          {!isLoading && !account && (
+            <Alert severity="warning" sx={{ m: 2 }}>
+              No account found. Please contact support.
+            </Alert>
+          )}
+
+          {!isLoading && account && filtered.length === 0 && (
+            <Box sx={{ py: 6, textAlign: "center" }}>
+              <SwapHorizRounded
+                sx={{ fontSize: 48, color: "text.disabled", mb: 1 }}
+              />
+              <Typography color="text.secondary">
+                {transactions.length === 0
+                  ? "No transactions yet. Send money to get started."
+                  : "No transactions match your filters."}
+              </Typography>
+            </Box>
+          )}
+
+          {/* List */}
+          {!isLoading && account && filtered.length > 0 && (
+            <Box sx={{ px: 2 }}>
+              <AnimatedList>
+                {filtered.map((tx) => (
+                  <AnimatedListItem key={tx.id}>
+                    <TransactionCard
+                      transaction={tx}
+                      currentAccountId={account.id}
+                    />
+                  </AnimatedListItem>
+                ))}
+              </AnimatedList>
+            </Box>
+          )}
+        </Paper>
+      </Box>
+    </PageTransition>
   );
 }

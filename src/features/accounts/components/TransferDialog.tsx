@@ -24,8 +24,15 @@ import {
   ArrowForwardRounded,
 } from "@mui/icons-material";
 import { useTransfer } from "@/features/banking/hooks/useTransfer";
+import { useToast } from "@/hooks/useToast";
 import { fetchAccountByNumber } from "@/features/banking/services/accountService";
 import { validateAccountNumberFormat } from "@/features/banking/services/transactionService";
+import {
+  lookupBankByAccountNumber,
+  isInternalAccount,
+  type BankInfo,
+} from "@/features/banking/data/bankRegistry";
+import { BankBadge } from "@/features/banking/components/BankBadge";
 import type { Account } from "@/types/banking";
 
 // ---------------------------------------------------------------------------
@@ -70,6 +77,7 @@ export function TransferDialog({
   fromAccount,
 }: TransferDialogProps) {
   const { mutateAsync: transfer, reset: resetMutation } = useTransfer();
+  const toast = useToast();
 
   // form
   const [toAccountNumber, setToAccountNumber] = useState("");
@@ -89,6 +97,14 @@ export function TransferDialog({
     success: boolean;
     message?: string;
   } | null>(null);
+
+  // Bank auto-detection (client-side, instant — no network call)
+  const detectedBank: BankInfo | null =
+    toAccountNumber.trim().length >= 3
+      ? lookupBankByAccountNumber(toAccountNumber.trim())
+      : null;
+  const isInternal =
+    detectedBank?.code === "SMX" || isInternalAccount(toAccountNumber.trim());
 
   // -------------------------------------------------------------------------
   // Reset + close
@@ -188,6 +204,13 @@ export function TransferDialog({
 
     setResult(res);
     setStep("result");
+    if (res.success) {
+      toast.success(
+        `Transfer of $${parseFloat(amount).toLocaleString("en-US", { minimumFractionDigits: 2 })} sent successfully`,
+      );
+    } else {
+      toast.error(res.message ?? "Transfer failed");
+    }
   }
 
   // -------------------------------------------------------------------------
@@ -266,8 +289,15 @@ export function TransferDialog({
               fullWidth
               autoComplete="off"
               slotProps={{ htmlInput: { maxLength: 13 } }}
-              sx={{ mb: 2 }}
+              sx={{ mb: detectedBank ? 1 : 2 }}
             />
+
+            {/* Live bank detection badge */}
+            <Collapse in={!!detectedBank} sx={{ mb: detectedBank ? 2 : 0 }}>
+              {detectedBank && (
+                <BankBadge bank={detectedBank} isInternal={isInternal} />
+              )}
+            </Collapse>
 
             <TextField
               label="Amount"
