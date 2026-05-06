@@ -19,6 +19,31 @@ export function useAuthInit() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // 0. If Supabase redirected back with an error (e.g. expired OTP),
+    //    parse it from the URL hash and send the user to /login with a message.
+    const hash = window.location.hash;
+    if (hash.includes("error=")) {
+      const params = new URLSearchParams(hash.replace(/^#\/?/, ""));
+      const errorCode = params.get("error_code") ?? "";
+      const errorDesc =
+        params.get("error_description")?.replace(/\+/g, " ") ??
+        "The link is invalid or has expired.";
+
+      let message = errorDesc;
+      if (errorCode === "otp_expired") {
+        message =
+          "Your confirmation link has expired. Please sign up again to receive a new one.";
+      }
+
+      // Clear the hash so the error params don't persist on reload
+      history.replaceState(
+        null,
+        "",
+        window.location.pathname + window.location.search,
+      );
+      navigate("/login", { replace: true, state: { authError: message } });
+    }
+
     // 1. Get the current session synchronously from storage, then mark initialized.
     //    This prevents a flicker where the app briefly shows the login page
     //    even when the user already has a valid session.

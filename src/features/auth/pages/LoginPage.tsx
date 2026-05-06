@@ -32,6 +32,10 @@ export function LoginPage() {
   const from =
     (location.state as { from?: string } | null)?.from ?? "/dashboard";
 
+  // Error message forwarded from useAuthInit (e.g. expired confirmation link)
+  const authError =
+    (location.state as { authError?: string } | null)?.authError ?? null;
+
   function validate() {
     const errors: typeof fieldErrors = {};
     if (!email) errors.email = "Email is required.";
@@ -65,6 +69,12 @@ export function LoginPage() {
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
         Sign in to your SmExPay account
       </Typography>
+
+      {authError && (
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          {authError}
+        </Alert>
+      )}
 
       {error && (
         <Alert severity="error" sx={{ mb: 2 }} onClose={clearError}>
