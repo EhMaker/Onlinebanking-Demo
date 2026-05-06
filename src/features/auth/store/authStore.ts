@@ -73,7 +73,8 @@ export const useAuthStore = create<AuthState & AuthActions>((set) => ({
         password,
         options: {
           data: { full_name: fullName },
-          // emailRedirectTo defaults to window.location.origin — fine for local dev
+          emailRedirectTo:
+            "https://ehmaker.github.io/Onlinebanking-Demo/#/login",
         },
       });
       if (error) throw error;

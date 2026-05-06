@@ -113,7 +113,12 @@ export function BalanceCard({
             >
               <Typography
                 variant="h3"
-                sx={{ fontWeight: 800, letterSpacing: -1, lineHeight: 1 }}
+                sx={{
+                  fontWeight: 800,
+                  letterSpacing: -1,
+                  lineHeight: 1,
+                  fontSize: { xs: "1.75rem", sm: "3rem" },
+                }}
               >
                 {hidden ? "••••••" : `$${formattedBalance}`}
               </Typography>
