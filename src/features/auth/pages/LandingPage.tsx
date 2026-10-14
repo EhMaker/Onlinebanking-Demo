@@ -130,8 +130,11 @@ export function LandingPage() {
         <Stack
           direction={{ xs: "column", sm: "row" }}
           spacing={{ xs: 1, sm: 3 }}
-          justifyContent="center"
-          sx={{ mt: 4, color: "rgba(255,255,255,0.62)" }}
+          sx={{
+            mt: 4,
+            color: "rgba(255,255,255,0.62)",
+            justifyContent: "center",
+          }}
         >
           <Typography
             variant="body2"
