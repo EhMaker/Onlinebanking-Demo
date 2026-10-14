@@ -208,7 +208,7 @@ export const useCardStore = create<CardState & CardActions>()(
       },
     }),
     {
-      name: "smexpay-cards",
+      name: "Jeonbuuk-cards",
       // Only persist the data, not the action functions
       partialize: (s) => ({ cardsByUser: s.cardsByUser, txByCard: s.txByCard }),
     },

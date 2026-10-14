@@ -9,6 +9,7 @@ import { LoginPage } from "@/features/auth/pages/LoginPage";
 import { SignupPage } from "@/features/auth/pages/SignupPage";
 import { ForgotPasswordPage } from "@/features/auth/pages/ForgotPasswordPage";
 import { ResetPasswordPage } from "@/features/auth/pages/ResetPasswordPage";
+import { LandingPage } from "@/features/auth/pages/LandingPage";
 import { DashboardPage } from "@/features/dashboard/pages/DashboardPage";
 import { AccountsPage } from "@/features/accounts/pages/AccountsPage";
 import { TransactionsPage } from "@/features/transactions/pages/TransactionsPage";
@@ -20,7 +21,7 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<LandingPage />} />
 
         {/* ── Public (guest-only) routes ── */}
         <Route

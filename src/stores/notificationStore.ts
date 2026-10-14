@@ -27,6 +27,6 @@ export const useNotificationStore = create<NotificationStore>()(
           readIds: s.readIds.filter((id) => keepIds.includes(id)),
         })),
     }),
-    { name: "smexpay-notifications" },
+    { name: "Jeonbuuk-notifications" },
   ),
 );

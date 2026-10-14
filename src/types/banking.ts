@@ -2,7 +2,7 @@
 // Account
 // ---------------------------------------------------------------------------
 
-export type AccountType = "checking" | "savings";
+export type AccountType = "General Savings" | "savings";
 
 export interface Account {
   id: string;

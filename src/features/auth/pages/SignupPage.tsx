@@ -91,7 +91,7 @@ export function SignupPage() {
         Create your account
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Join SmExPay — it's free
+        Join Jeonbuuk Bank — it's free
       </Typography>
 
       {error && (

@@ -18,7 +18,7 @@ export const useThemeStore = create<ThemeState>()(
       setMode: (mode) => set({ mode }),
     }),
     {
-      name: "smexpay-theme",
+      name: "Jeonbuuk-theme",
       partialize: (s) => ({ mode: s.mode }),
     },
   ),

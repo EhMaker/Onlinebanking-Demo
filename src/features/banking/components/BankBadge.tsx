@@ -4,7 +4,7 @@ import type { BankInfo } from "@/features/banking/data/bankRegistry";
 
 interface BankBadgeProps {
   bank: BankInfo;
-  /** Whether the account belongs to SmExPay (internal transfer) */
+  /** Whether the account belongs to Jeonbuuk (internal transfer) */
   isInternal?: boolean;
   /** compact = just the badge pill; full = row with description */
   variant?: "compact" | "full";

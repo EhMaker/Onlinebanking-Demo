@@ -99,9 +99,13 @@ function DrawerContent() {
             color="primary.main"
             sx={{ fontWeight: 700, lineHeight: 1.2 }}
           >
-            SmExPay
+            Jeonbuuk Bank
           </Typography>
-          <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1 }}>
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ lineHeight: 1 }}
+          >
             Seamless Banking
           </Typography>
         </Box>

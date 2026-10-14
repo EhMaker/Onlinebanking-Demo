@@ -6,7 +6,7 @@ import type { Transaction } from "@/types/banking";
 // ---------------------------------------------------------------------------
 
 /** Valid formats: SMX followed by 10 digits  e.g. SMX0012345678 */
-const ACCOUNT_NUMBER_RE = /^SMX\d{10}$/i;
+const ACCOUNT_NUMBER_RE = /^311\d{10}$/i;
 
 export function validateAccountNumberFormat(value: string): string | null {
   const trimmed = value.trim();

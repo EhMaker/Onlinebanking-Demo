@@ -197,7 +197,7 @@ export function BalanceCard({
         )}
 
         <Chip
-          label={account?.account_type ?? "Checking"}
+          label={account?.account_type ?? "General Savings"}
           size="small"
           sx={{
             bgcolor: "rgba(255,255,255,0.15)",

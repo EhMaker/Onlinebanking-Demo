@@ -40,20 +40,30 @@ export function AuthLayout() {
             <AccountBalanceRounded sx={{ color: "#fff", fontSize: 28 }} />
           </Box>
           <Typography variant="h4" sx={{ fontWeight: 800, color: "#fff" }}>
-            SmExPay
+            Jeonbuuk Bank
           </Typography>
         </Box>
 
         <Typography
           variant="h5"
-          sx={{ fontWeight: 700, color: "#fff", textAlign: "center", maxWidth: 360, lineHeight: 1.35 }}
+          sx={{
+            fontWeight: 700,
+            color: "#fff",
+            textAlign: "center",
+            maxWidth: 360,
+            lineHeight: 1.35,
+          }}
         >
           Banking that moves as fast as you do.
         </Typography>
 
         <Typography
           variant="body1"
-          sx={{ color: "rgba(255,255,255,0.7)", textAlign: "center", maxWidth: 340 }}
+          sx={{
+            color: "rgba(255,255,255,0.7)",
+            textAlign: "center",
+            maxWidth: 340,
+          }}
         >
           Send money, manage accounts, and track every transaction — all in one
           place.
@@ -85,8 +95,11 @@ export function AuthLayout() {
           }}
         >
           <AccountBalanceRounded color="primary" sx={{ fontSize: 28 }} />
-          <Typography variant="h6" sx={{ fontWeight: 800, color: "primary.main" }}>
-            SmExPay
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: 800, color: "primary.main" }}
+          >
+            Jeonbuuk Bank
           </Typography>
         </Box>
 

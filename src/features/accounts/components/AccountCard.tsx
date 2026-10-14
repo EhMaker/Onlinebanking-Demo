@@ -115,11 +115,11 @@ export function AccountCard({ account, profile, isLoading }: AccountCardProps) {
               letterSpacing: 0.5,
             }}
           >
-            SmExPay Bank
+            Jeonbuuk Bank
           </Typography>
           {isLoading ? null : (
             <Chip
-              label={account?.account_type ?? "checking"}
+              label={account?.account_type ?? "General Savings"}
               size="small"
               sx={{
                 ml: "auto",
@@ -223,7 +223,7 @@ export function AccountCard({ account, profile, isLoading }: AccountCardProps) {
           label="Account type"
           value={
             <Box sx={{ textTransform: "capitalize" }}>
-              {account?.account_type ?? "Checking"}
+              {account?.account_type ?? "General Savings"}
             </Box>
           }
         />

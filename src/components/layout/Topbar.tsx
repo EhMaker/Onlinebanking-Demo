@@ -40,7 +40,7 @@ export function Topbar({
   onMenuToggle,
 }: TopbarProps) {
   const location = useLocation();
-  const title = PAGE_TITLES[location.pathname] ?? "SmExPay";
+  const title = PAGE_TITLES[location.pathname] ?? "Jeonbuuk Bank";
 
   const { user, profile } = useAuthStore();
   const { mode, toggleMode } = useThemeStore();
