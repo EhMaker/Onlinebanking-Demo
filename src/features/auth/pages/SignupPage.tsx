@@ -10,6 +10,7 @@ import {
   InputAdornment,
   Divider,
   CircularProgress,
+  MenuItem,
 } from "@mui/material";
 import { VisibilityRounded, VisibilityOffRounded } from "@mui/icons-material";
 import { useAuthStore } from "@/features/auth/store/authStore";
@@ -18,6 +19,14 @@ export function SignupPage() {
   const { signup, isLoading, error, clearError } = useAuthStore();
 
   const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -25,6 +34,14 @@ export function SignupPage() {
   const [signedUp, setSignedUp] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<{
     fullName?: string;
+    phoneNumber?: string;
+    dateOfBirth?: string;
+    address?: string;
+    city?: string;
+    state?: string;
+    postalCode?: string;
+    nationality?: string;
+    gender?: string;
     email?: string;
     password?: string;
     confirmPassword?: string;
@@ -33,6 +50,23 @@ export function SignupPage() {
   function validate() {
     const errors: typeof fieldErrors = {};
     if (!fullName.trim()) errors.fullName = "Full name is required.";
+    if (!phoneNumber.trim()) errors.phoneNumber = "Phone number is required.";
+    else if (!/^[+]?[\d\s().-]{7,20}$/.test(phoneNumber.trim()))
+      errors.phoneNumber = "Enter a valid phone number.";
+    if (!dateOfBirth) errors.dateOfBirth = "Date of birth is required.";
+    else if (
+      Number.isNaN(new Date(dateOfBirth).getTime()) ||
+      new Date(dateOfBirth) > new Date()
+    )
+      errors.dateOfBirth = "Enter a valid date of birth.";
+    if (!address.trim()) errors.address = "Address is required.";
+    if (!city.trim()) errors.city = "City is required.";
+    if (!state.trim()) errors.state = "State is required.";
+    if (!postalCode.trim()) errors.postalCode = "Postal code is required.";
+    else if (!/^[A-Za-z0-9][A-Za-z0-9\s-]{2,9}$/.test(postalCode.trim()))
+      errors.postalCode = "Enter a valid postal code.";
+    if (!nationality.trim()) errors.nationality = "Nationality is required.";
+    if (!gender) errors.gender = "Gender is required.";
     if (!email) errors.email = "Email is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       errors.email = "Enter a valid email.";
@@ -55,7 +89,19 @@ export function SignupPage() {
     if (!validate()) return;
 
     try {
-      await signup({ email, password, fullName });
+      await signup({
+        email,
+        password,
+        fullName,
+        phoneNumber,
+        dateOfBirth,
+        address,
+        city,
+        state,
+        postalCode,
+        nationality,
+        gender,
+      });
       setSignedUp(true);
     } catch {
       // error is set in the store
@@ -111,6 +157,103 @@ export function SignupPage() {
         autoFocus
         sx={{ mb: 2 }}
       />
+
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
+          gap: 2,
+          mb: 2,
+        }}
+      >
+        <TextField
+          label="Phone number"
+          type="tel"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          error={!!fieldErrors.phoneNumber}
+          helperText={fieldErrors.phoneNumber}
+          fullWidth
+          autoComplete="tel"
+        />
+
+        <TextField
+          label="Date of birth"
+          type="date"
+          value={dateOfBirth}
+          onChange={(e) => setDateOfBirth(e.target.value)}
+          error={!!fieldErrors.dateOfBirth}
+          helperText={fieldErrors.dateOfBirth}
+          fullWidth
+          slotProps={{ inputLabel: { shrink: true } }}
+        />
+
+        <TextField
+          label="Address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          error={!!fieldErrors.address}
+          helperText={fieldErrors.address}
+          fullWidth
+          autoComplete="street-address"
+          sx={{ gridColumn: { xs: "auto", sm: "1 / -1" } }}
+        />
+
+        <TextField
+          label="City"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          error={!!fieldErrors.city}
+          helperText={fieldErrors.city}
+          fullWidth
+          autoComplete="address-level2"
+        />
+
+        <TextField
+          label="State"
+          value={state}
+          onChange={(e) => setState(e.target.value)}
+          error={!!fieldErrors.state}
+          helperText={fieldErrors.state}
+          fullWidth
+          autoComplete="address-level1"
+        />
+
+        <TextField
+          label="Postal code"
+          value={postalCode}
+          onChange={(e) => setPostalCode(e.target.value)}
+          error={!!fieldErrors.postalCode}
+          helperText={fieldErrors.postalCode}
+          fullWidth
+          autoComplete="postal-code"
+        />
+
+        <TextField
+          label="Nationality"
+          value={nationality}
+          onChange={(e) => setNationality(e.target.value)}
+          error={!!fieldErrors.nationality}
+          helperText={fieldErrors.nationality}
+          fullWidth
+          autoComplete="country-name"
+        />
+
+        <TextField
+          select
+          label="Gender"
+          value={gender}
+          onChange={(e) => setGender(e.target.value)}
+          error={!!fieldErrors.gender}
+          helperText={fieldErrors.gender}
+          fullWidth
+        >
+          <MenuItem value="female">Female</MenuItem>
+          <MenuItem value="male">Male</MenuItem>
+          <MenuItem value="non_binary">Non-binary</MenuItem>
+          <MenuItem value="prefer_not_to_say">Prefer not to say</MenuItem>
+        </TextField>
+      </Box>
 
       <TextField
         label="Email address"

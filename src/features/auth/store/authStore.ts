@@ -65,14 +65,36 @@ export const useAuthStore = create<AuthState & AuthActions>((set) => ({
     }
   },
 
-  signup: async ({ email, password, fullName }) => {
+  signup: async ({
+    email,
+    password,
+    fullName,
+    phoneNumber,
+    dateOfBirth,
+    address,
+    city,
+    state,
+    postalCode,
+    nationality,
+    gender,
+  }) => {
     set({ isLoading: true, error: null });
     try {
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          data: { full_name: fullName },
+          data: {
+            full_name: fullName,
+            phone_number: phoneNumber,
+            date_of_birth: dateOfBirth,
+            address,
+            city,
+            state,
+            postal_code: postalCode,
+            nationality,
+            gender,
+          },
           emailRedirectTo:
             "https://ehmaker.github.io/Onlinebanking-Demo/#/login",
         },

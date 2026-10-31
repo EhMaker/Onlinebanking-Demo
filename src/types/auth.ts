@@ -17,6 +17,14 @@ export interface SignupCredentials {
   email: string;
   password: string;
   fullName: string;
+  phoneNumber: string;
+  dateOfBirth: string;
+  address: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  nationality: string;
+  gender: string;
 }
 
 // ---------------------------------------------------------------------------
