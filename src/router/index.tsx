@@ -15,6 +15,7 @@ import { AccountsPage } from "@/features/accounts/pages/AccountsPage";
 import { TransactionsPage } from "@/features/transactions/pages/TransactionsPage";
 import { CardsPage } from "@/features/cards/pages/CardsPage";
 import { SettingsPage } from "@/features/settings/pages/SettingsPage";
+import { ProfilePage } from "@/features/profile/pages/ProfilePage";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -94,6 +95,14 @@ function AnimatedRoutes() {
             element={
               <ErrorBoundary>
                 <SettingsPage />
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ErrorBoundary>
+                <ProfilePage />
               </ErrorBoundary>
             }
           />

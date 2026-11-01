@@ -64,6 +64,11 @@ function DrawerContent() {
     .slice(0, 2)
     .join("")
     .toUpperCase();
+  const avatarUrl =
+    profile?.avatar_url ??
+    (typeof user?.user_metadata?.avatar_url === "string"
+      ? user.user_metadata.avatar_url
+      : undefined);
 
   return (
     <Box
@@ -159,6 +164,7 @@ function DrawerContent() {
         }}
       >
         <Avatar
+          src={avatarUrl}
           sx={{
             width: 36,
             height: 36,

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -26,6 +26,7 @@ const PAGE_TITLES: Record<string, string> = {
   "/transactions": "Transactions",
   "/cards": "My Cards",
   "/settings": "Settings",
+  "/profile": "My Profile",
 };
 
 interface TopbarProps {
@@ -40,6 +41,7 @@ export function Topbar({
   onMenuToggle,
 }: TopbarProps) {
   const location = useLocation();
+  const navigate = useNavigate();
   const title = PAGE_TITLES[location.pathname] ?? "Jeonbuuk Bank";
 
   const { user, profile } = useAuthStore();
@@ -56,6 +58,11 @@ export function Topbar({
     .slice(0, 2)
     .join("")
     .toUpperCase();
+  const avatarUrl =
+    profile?.avatar_url ??
+    (typeof user?.user_metadata?.avatar_url === "string"
+      ? user.user_metadata.avatar_url
+      : undefined);
 
   return (
     <AppBar
@@ -117,20 +124,25 @@ export function Topbar({
         />
 
         {/* User avatar */}
-        <Tooltip title={displayName || "Account"}>
-          <Avatar
-            sx={{
-              width: 34,
-              height: 34,
-              bgcolor: "primary.main",
-              fontSize: 13,
-              fontWeight: 700,
-              cursor: "pointer",
-              ml: 0.5,
-            }}
+        <Tooltip title="View profile">
+          <IconButton
+            onClick={() => navigate("/profile")}
+            aria-label="View profile"
+            sx={{ ml: 0.5, p: 0.5 }}
           >
-            {initials}
-          </Avatar>
+            <Avatar
+              src={avatarUrl}
+              sx={{
+                width: 34,
+                height: 34,
+                bgcolor: "primary.main",
+                fontSize: 13,
+                fontWeight: 700,
+              }}
+            >
+              {initials}
+            </Avatar>
+          </IconButton>
         </Tooltip>
       </Toolbar>
     </AppBar>
