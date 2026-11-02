@@ -74,7 +74,14 @@ function Detail({
 }
 
 export function ProfilePage() {
-  const { user, profile, _setAuthState, _setProfile } = useAuthStore();
+  const {
+    user,
+    profile,
+    avatarPreviewUrl,
+    _setAuthState,
+    _setProfile,
+    _setAvatarPreview,
+  } = useAuthStore();
   const metadata = (user?.user_metadata ?? {}) as Record<string, unknown>;
   const displayName =
     profile?.full_name ??
@@ -141,6 +148,7 @@ export function ProfilePage() {
       : metadataValue(metadata, "gender"),
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const displayedAvatarUrl = avatarPreviewUrl ?? avatarUrl;
 
   function updateField(field: keyof typeof form, value: string) {
     setForm((current) => ({ ...current, [field]: value }));
@@ -202,6 +210,7 @@ export function ProfilePage() {
       return;
     }
 
+    const previewUrl = URL.createObjectURL(file);
     setIsUploading(true);
     setMessage(null);
     let uploadStage = "upload";
@@ -231,14 +240,24 @@ export function ProfilePage() {
       if (metadataError) throw metadataError;
 
       if (profile) {
-        _setProfile({ ...profile, avatar_url: avatarUrl });
+        // Keep the immediate preview in the shared store. The persisted URL
+        // remains in Supabase and is used again after the next session load.
+        _setAvatarPreview(previewUrl);
+        _setProfile({ ...profile, avatar_url: previewUrl });
       }
       _setAuthState({
-        user: authData.user,
+        user: {
+          ...authData.user,
+          user_metadata: {
+            ...authData.user.user_metadata,
+            avatar_url: previewUrl,
+          },
+        },
         session: useAuthStore.getState().session,
       });
       setMessage({ severity: "success", text: "Profile picture updated." });
     } catch (error) {
+      URL.revokeObjectURL(previewUrl);
       const errorMessage =
         error instanceof Error ? error.message : "Unable to upload your profile picture.";
       setMessage({
@@ -277,7 +296,7 @@ export function ProfilePage() {
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                   <Box sx={{ position: "relative", flexShrink: 0 }}>
                     <Avatar
-                      src={avatarUrl}
+                      src={displayedAvatarUrl}
                       sx={{
                         width: { xs: 64, sm: 76 },
                         height: { xs: 64, sm: 76 },

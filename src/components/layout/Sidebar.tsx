@@ -51,7 +51,7 @@ interface SidebarProps {
 function DrawerContent() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, profile, logout } = useAuthStore();
+  const { user, profile, logout, avatarPreviewUrl } = useAuthStore();
 
   const displayName =
     profile?.full_name ??
@@ -65,6 +65,7 @@ function DrawerContent() {
     .join("")
     .toUpperCase();
   const avatarUrl =
+    avatarPreviewUrl ??
     profile?.avatar_url ??
     (typeof user?.user_metadata?.avatar_url === "string"
       ? user.user_metadata.avatar_url

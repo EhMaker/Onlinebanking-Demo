@@ -49,6 +49,8 @@ export interface AuthState {
   user: User | null;
   session: Session | null;
   profile: Profile | null;
+  /** Immediate avatar preview for the current browser session */
+  avatarPreviewUrl: string | null;
   /** True while Supabase is resolving the initial session on page load */
   isInitialized: boolean;
   isLoading: boolean;

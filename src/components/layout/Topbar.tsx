@@ -44,7 +44,7 @@ export function Topbar({
   const navigate = useNavigate();
   const title = PAGE_TITLES[location.pathname] ?? "Jeonbuuk Bank";
 
-  const { user, profile } = useAuthStore();
+  const { user, profile, avatarPreviewUrl } = useAuthStore();
   const { mode, toggleMode } = useThemeStore();
   const { notifications, unreadCount, isLoading, markRead, markAllAsRead } =
     useNotifications();
@@ -59,6 +59,7 @@ export function Topbar({
     .join("")
     .toUpperCase();
   const avatarUrl =
+    avatarPreviewUrl ??
     profile?.avatar_url ??
     (typeof user?.user_metadata?.avatar_url === "string"
       ? user.user_metadata.avatar_url

@@ -16,6 +16,7 @@ interface AuthActions {
   /** Called once on app boot by useAuthInit — sets user/session from Supabase */
   _setAuthState: (state: Pick<AuthState, "user" | "session">) => void;
   _setProfile: (profile: Profile | null) => void;
+  _setAvatarPreview: (url: string | null) => void;
   _setInitialized: () => void;
   _setError: (error: string | null) => void;
   _setPasswordRecovery: (value: boolean) => void;
@@ -27,6 +28,7 @@ export const useAuthStore = create<AuthState & AuthActions>((set) => ({
   user: null,
   session: null,
   profile: null,
+  avatarPreviewUrl: null,
   isInitialized: false,
   isLoading: false,
   error: null,
@@ -35,6 +37,7 @@ export const useAuthStore = create<AuthState & AuthActions>((set) => ({
   // ---- internal setters (only called from useAuthInit) ----
   _setAuthState: ({ user, session }) => set({ user, session }),
   _setProfile: (profile) => set({ profile }),
+  _setAvatarPreview: (avatarPreviewUrl) => set({ avatarPreviewUrl }),
   _setInitialized: () => set({ isInitialized: true }),
   _setError: (error) => set({ error }),
   _setPasswordRecovery: (isPasswordRecovery) => set({ isPasswordRecovery }),
