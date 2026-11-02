@@ -18,10 +18,10 @@ import {
   SwapHorizRounded,
   CreditCardRounded,
   SettingsRounded,
-  AccountBalanceRounded,
   LogoutRounded,
 } from "@mui/icons-material";
 import { useAuthStore } from "@/features/auth/store/authStore";
+import bankLogo from "@/assets/logo_transparent_background.png";
 
 interface NavItem {
   label: string;
@@ -89,15 +89,23 @@ function DrawerContent() {
           sx={{
             width: 36,
             height: 36,
-            borderRadius: "10px",
-            bgcolor: "primary.main",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flexShrink: 0,
           }}
         >
-          <AccountBalanceRounded sx={{ color: "#fff", fontSize: 20 }} />
+          <Box
+            component="img"
+            src={bankLogo}
+            alt="Jeonbuuk Bank logo"
+            sx={{
+              width: 36,
+              height: 36,
+              objectFit: "contain",
+              display: "block",
+            }}
+          />
         </Box>
         <Box>
           <Typography

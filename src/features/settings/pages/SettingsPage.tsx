@@ -60,7 +60,7 @@ function SectionHeader({
 }
 
 export function SettingsPage() {
-  const { user, profile } = useAuthStore();
+  const { user, profile, avatarPreviewUrl } = useAuthStore();
   const { mode, toggleMode } = useThemeStore();
   const toast = useToast();
 
@@ -75,6 +75,12 @@ export function SettingsPage() {
     .slice(0, 2)
     .join("")
     .toUpperCase();
+  const avatarUrl =
+    avatarPreviewUrl ??
+    profile?.avatar_url ??
+    (typeof user?.user_metadata?.avatar_url === "string"
+      ? user.user_metadata.avatar_url
+      : undefined);
 
   const [nameValue, setNameValue] = useState(displayName);
   const [savingName, setSavingName] = useState(false);
@@ -147,6 +153,7 @@ export function SettingsPage() {
                   sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3 }}
                 >
                   <Avatar
+                    src={avatarUrl}
                     sx={{
                       width: 64,
                       height: 64,
