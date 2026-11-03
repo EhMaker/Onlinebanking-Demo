@@ -52,6 +52,7 @@ export interface TransferParams {
   toAccountNumber: string;
   amount: number;
   description?: string;
+  transactionPin: string;
 }
 
 // ---------------------------------------------------------------------------

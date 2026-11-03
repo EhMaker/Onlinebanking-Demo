@@ -1,6 +1,7 @@
 import { Box, Typography, Avatar, Chip } from "@mui/material";
 import { AccountBalanceRounded } from "@mui/icons-material";
 import type { BankInfo } from "@/features/banking/data/bankRegistry";
+import bankLogo from "@/assets/logo_transparent_background.png";
 
 interface BankBadgeProps {
   bank: BankInfo;
@@ -27,13 +28,14 @@ export function BankBadge({
       <Chip
         avatar={
           <Avatar
+            src={isInternal ? bankLogo : undefined}
             sx={{
               bgcolor: bank.color,
               color: "#fff !important",
               fontSize: "0.65rem",
             }}
           >
-            {initials}
+            {!isInternal && initials}
           </Avatar>
         }
         label={bank.shortName}
@@ -59,6 +61,7 @@ export function BankBadge({
       }}
     >
       <Avatar
+        src={isInternal ? bankLogo : undefined}
         sx={{
           width: 36,
           height: 36,
@@ -67,7 +70,7 @@ export function BankBadge({
           fontWeight: 700,
         }}
       >
-        {initials}
+        {!isInternal && initials}
       </Avatar>
       <Box sx={{ flex: 1, minWidth: 0 }}>
         <Typography variant="body2" sx={{ fontWeight: 600 }}>

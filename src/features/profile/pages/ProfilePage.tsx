@@ -22,6 +22,7 @@ import {
   HomeRounded,
   EditRounded,
   AddRounded,
+  LockRounded,
   LocalPhoneRounded,
   PublicRounded,
   SaveRounded,
@@ -31,6 +32,7 @@ import { PageTransition } from "@/components/motion/PageTransition";
 import { FadeIn } from "@/components/motion/AnimatedList";
 import { useAuthStore } from "@/features/auth/store/authStore";
 import { supabase } from "@/lib/supabase";
+import { TransactionPinDialog } from "@/features/auth/components/TransactionPinDialog";
 
 function metadataValue(metadata: Record<string, unknown>, key: string) {
   const value = metadata[key];
@@ -114,6 +116,7 @@ export function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [pinDialogOpen, setPinDialogOpen] = useState(false);
   const [message, setMessage] = useState<{
     severity: "success" | "error";
     text: string;
@@ -548,8 +551,49 @@ export function ProfilePage() {
               </CardContent>
             </Card>
           </FadeIn>
+
+          <FadeIn delay={0.2}>
+            <Card>
+              <CardContent sx={{ p: { xs: 2.5, sm: 3 } }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
+                  Transaction security
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                  Use a transaction PIN to protect money transfers. Email
+                  verification is required when setting or changing it.
+                </Typography>
+                <Button
+                  variant="outlined"
+                  startIcon={<LockRounded />}
+                  onClick={() => setPinDialogOpen(true)}
+                >
+                  {profile?.transaction_pin_set
+                    ? "Change transaction PIN"
+                    : "Set transaction PIN"}
+                </Button>
+              </CardContent>
+            </Card>
+          </FadeIn>
         </Stack>
       </Box>
+      {user?.email && (
+        <TransactionPinDialog
+          open={pinDialogOpen}
+          email={user.email}
+          isChange={profile?.transaction_pin_set ?? false}
+          onClose={() => setPinDialogOpen(false)}
+          onComplete={() => {
+            setPinDialogOpen(false);
+            if (profile) {
+              _setProfile({ ...profile, transaction_pin_set: true });
+            }
+            setMessage({
+              severity: "success",
+              text: "Transaction PIN saved successfully.",
+            });
+          }}
+        />
+      )}
     </PageTransition>
   );
 }

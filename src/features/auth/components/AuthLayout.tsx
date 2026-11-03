@@ -1,6 +1,6 @@
 import { Outlet, Link as RouterLink } from "react-router-dom";
 import { Box, Typography, Paper } from "@mui/material";
-import { AccountBalanceRounded } from "@mui/icons-material";
+import bankLogo from "@/assets/logo_transparent_background.png";
 
 export function AuthLayout() {
   return (
@@ -37,7 +37,12 @@ export function AuthLayout() {
               justifyContent: "center",
             }}
           >
-            <AccountBalanceRounded sx={{ color: "#fff", fontSize: 28 }} />
+            <Box
+              component="img"
+              src={bankLogo}
+              alt="Jeonbuuk Bank logo"
+              sx={{ width: 40, height: 40, objectFit: "contain" }}
+            />
           </Box>
           <Typography variant="h4" sx={{ fontWeight: 800, color: "#fff" }}>
             Jeonbuuk Bank
@@ -94,7 +99,12 @@ export function AuthLayout() {
             textDecoration: "none",
           }}
         >
-          <AccountBalanceRounded color="primary" sx={{ fontSize: 28 }} />
+          <Box
+            component="img"
+            src={bankLogo}
+            alt="Jeonbuuk Bank logo"
+            sx={{ width: 32, height: 32, objectFit: "contain" }}
+          />
           <Typography
             variant="h6"
             sx={{ fontWeight: 800, color: "primary.main" }}

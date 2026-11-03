@@ -24,6 +24,9 @@ import {
   ArrowForwardRounded,
 } from "@mui/icons-material";
 import { useTransfer } from "@/features/banking/hooks/useTransfer";
+import { useAuthStore } from "@/features/auth/store/authStore";
+import { TransactionPinDialog } from "@/features/auth/components/TransactionPinDialog";
+import { VerifyTransactionPinDialog } from "@/features/auth/components/VerifyTransactionPinDialog";
 import { useToast } from "@/hooks/useToast";
 import { fetchAccountByNumber } from "@/features/banking/services/accountService";
 import { validateAccountNumberFormat } from "@/features/banking/services/transactionService";
@@ -77,6 +80,7 @@ export function TransferDialog({
   fromAccount,
 }: TransferDialogProps) {
   const { mutateAsync: transfer, reset: resetMutation } = useTransfer();
+  const { user, profile, _setProfile } = useAuthStore();
   const toast = useToast();
 
   // form
@@ -97,6 +101,9 @@ export function TransferDialog({
     success: boolean;
     message?: string;
   } | null>(null);
+  const [pinSetupOpen, setPinSetupOpen] = useState(false);
+  const [pinVerifyOpen, setPinVerifyOpen] = useState(false);
+  const [pinReady, setPinReady] = useState(false);
 
   // Bank auto-detection (client-side, instant — no network call)
   const detectedBank: BankInfo | null =
@@ -120,6 +127,7 @@ export function TransferDialog({
     setRecipient(null);
     setResult(null);
     setStep("details");
+    setPinReady(false);
     resetMutation();
   }
 
@@ -133,7 +141,7 @@ export function TransferDialog({
   // Step 1 → 2  (validate + lookup recipient)
   // -------------------------------------------------------------------------
 
-  async function handleReview() {
+  async function handleReview(skipPinCheck = false) {
     const errors: typeof fieldErrors = {};
     const parsed = parseFloat(amount);
 
@@ -159,6 +167,11 @@ export function TransferDialog({
 
     setFieldErrors(errors);
     if (Object.keys(errors).length > 0) return;
+
+    if (!skipPinCheck && !profile?.transaction_pin_set && !pinReady) {
+      setPinSetupOpen(true);
+      return;
+    }
 
     // Live recipient lookup
     setLookupError("");
@@ -188,7 +201,7 @@ export function TransferDialog({
   // Step 2 → 3 → 4  (confirm → processing → result)
   // -------------------------------------------------------------------------
 
-  async function handleConfirm() {
+  async function executeTransfer(transactionPin: string) {
     setStep("processing");
 
     const res = await transfer({
@@ -196,6 +209,7 @@ export function TransferDialog({
       toAccountNumber: toAccountNumber.trim(),
       amount: parseFloat(amount),
       description: description.trim() || "Transfer",
+      transactionPin,
     }).catch((err: unknown) => ({
       success: false as const,
       message:
@@ -211,6 +225,10 @@ export function TransferDialog({
     } else {
       toast.error(res.message ?? "Transfer failed");
     }
+  }
+
+  function handleConfirm() {
+    setPinVerifyOpen(true);
   }
 
   // -------------------------------------------------------------------------
@@ -333,7 +351,7 @@ export function TransferDialog({
               Cancel
             </Button>
             <Button
-              onClick={handleReview}
+              onClick={() => void handleReview()}
               variant="contained"
               fullWidth
               disabled={lookupLoading}
@@ -529,6 +547,30 @@ export function TransferDialog({
           </DialogActions>
         </>
       )}
+      {user?.email && (
+        <TransactionPinDialog
+          open={pinSetupOpen}
+          email={user.email}
+          isChange={false}
+          onClose={() => setPinSetupOpen(false)}
+          onComplete={() => {
+            setPinSetupOpen(false);
+            setPinReady(true);
+            if (profile) {
+              _setProfile({ ...profile, transaction_pin_set: true });
+            }
+            void handleReview(true);
+          }}
+        />
+      )}
+      <VerifyTransactionPinDialog
+        open={pinVerifyOpen}
+        onClose={() => setPinVerifyOpen(false)}
+        onVerified={(transactionPin) => {
+          setPinVerifyOpen(false);
+          void executeTransfer(transactionPin);
+        }}
+      />
     </Dialog>
   );
 }

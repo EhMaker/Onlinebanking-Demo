@@ -36,6 +36,7 @@ export interface Profile {
   id: string; // uuid — FK → auth.users.id
   full_name: string | null;
   avatar_url: string | null;
+  transaction_pin_set: boolean;
   role: "user" | "admin";
   created_at: string;
   updated_at: string;

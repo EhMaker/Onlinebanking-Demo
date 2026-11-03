@@ -12,7 +12,7 @@ export function validateAccountNumberFormat(value: string): string | null {
   const trimmed = value.trim();
   if (!trimmed) return "Account number is required.";
   if (!ACCOUNT_NUMBER_RE.test(trimmed))
-    return "Account number must be in the format SMX followed by 10 digits (e.g. SMX0012345678).";
+    return "Account number must be in the format 311 followed by 10 digits (e.g. 3110012345678).";
   return null; // valid
 }
 
@@ -97,6 +97,7 @@ export async function transferFunds(params: {
   toAccountNumber: string;
   amount: number;
   description?: string;
+  transactionPin: string;
 }): Promise<TransferResult> {
   // 1. Format validation (client-side — instant, no network round-trip)
   const formatError = validateAccountNumberFormat(params.toAccountNumber);
@@ -106,11 +107,12 @@ export async function transferFunds(params: {
   await delay(1500);
 
   // 3. Execute transfer via RPC
-  const { error } = await supabase.rpc("transfer_funds", {
+  const { error } = await supabase.rpc("transfer_funds_with_pin", {
     p_from_account_id: params.fromAccountId,
     p_to_account_number: params.toAccountNumber.toUpperCase(),
     p_amount: params.amount,
     p_description: params.description ?? "Transfer",
+    p_pin: params.transactionPin,
   });
 
   if (error) {
