@@ -25,6 +25,9 @@ export interface SignupCredentials {
   postalCode: string;
   nationality: string;
   gender: string;
+  nextOfKinName: string;
+  nextOfKinRelationship: string;
+  nextOfKinPhoneNumber: string;
 }
 
 // ---------------------------------------------------------------------------

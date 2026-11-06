@@ -80,6 +80,9 @@ export const useAuthStore = create<AuthState & AuthActions>((set) => ({
     postalCode,
     nationality,
     gender,
+    nextOfKinName,
+    nextOfKinRelationship,
+    nextOfKinPhoneNumber,
   }) => {
     set({ isLoading: true, error: null });
     try {
@@ -97,6 +100,9 @@ export const useAuthStore = create<AuthState & AuthActions>((set) => ({
             postal_code: postalCode,
             nationality,
             gender,
+            next_of_kin_name: nextOfKinName,
+            next_of_kin_relationship: nextOfKinRelationship,
+            next_of_kin_phone_number: nextOfKinPhoneNumber,
           },
           emailRedirectTo:
             "https://ehmaker.github.io/Onlinebanking-Demo/#/login",

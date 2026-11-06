@@ -40,12 +40,12 @@ export function AuthLayout() {
             <Box
               component="img"
               src={bankLogo}
-              alt="Jeonbuuk Bank logo"
+              alt="SmExPay Bank logo"
               sx={{ width: 40, height: 40, objectFit: "contain" }}
             />
           </Box>
           <Typography variant="h4" sx={{ fontWeight: 800, color: "#fff" }}>
-            Jeonbuuk Bank
+            SmExPay Bank
           </Typography>
         </Box>
 
@@ -102,14 +102,14 @@ export function AuthLayout() {
           <Box
             component="img"
             src={bankLogo}
-            alt="Jeonbuuk Bank logo"
+            alt="SmExPay Bank logo"
             sx={{ width: 32, height: 32, objectFit: "contain" }}
           />
           <Typography
             variant="h6"
             sx={{ fontWeight: 800, color: "primary.main" }}
           >
-            Jeonbuuk Bank
+            SmExPay Bank
           </Typography>
         </Box>
 

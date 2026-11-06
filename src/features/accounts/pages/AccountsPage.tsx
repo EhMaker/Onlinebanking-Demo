@@ -49,7 +49,7 @@ export function AccountsPage() {
               My Account
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Manage your Jeonbuuk Bank account and transfer funds
+              Manage your SmExPay Bank account and transfer funds
             </Typography>
           </Box>
           <Button
@@ -172,7 +172,7 @@ export function AccountsPage() {
                         letterSpacing: 1,
                       }}
                     >
-                      311PUS33
+                      SMXPUS33
                     </Typography>
                   </Box>
                 </Box>

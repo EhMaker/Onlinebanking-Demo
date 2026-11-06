@@ -23,15 +23,15 @@ export interface BankInfo {
 export const BANK_REGISTRY: BankInfo[] = [
   // ── Internal bank ────────────────────────────────────────────────────────
   {
-    code: "JEONBUUK",
-    name: "Jeonbuuk Bank",
-    shortName: "Jeonbuuk",
+    code: "SmExPay",
+    name: "SmExPay Bank",
+    shortName: "SmExPay",
     country: "United States",
     countryCode: "US",
     color: "#1B4FD8",
     accentColor: "#3B82F6",
-    prefixes: ["311"],
-    swift: "311PUS33",
+    prefixes: ["SMX"],
+    swift: "SMXPUS33",
     routingNumber: "021000089",
   },
 
@@ -202,5 +202,5 @@ export function lookupBankBySwift(swift: string): BankInfo | null {
  * Determine whether an account number belongs to our internal bank (SmExPay).
  */
 export function isInternalAccount(accountNumber: string): boolean {
-  return accountNumber.trim().toUpperCase().startsWith("311");
+  return accountNumber.trim().toUpperCase().startsWith("SMX");
 }

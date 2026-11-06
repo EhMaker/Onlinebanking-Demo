@@ -111,7 +111,7 @@ export function TransferDialog({
       ? lookupBankByAccountNumber(toAccountNumber.trim())
       : null;
   const isInternal =
-    detectedBank?.code === "311" || isInternalAccount(toAccountNumber.trim());
+    detectedBank?.code === "SMX" || isInternalAccount(toAccountNumber.trim());
 
   // -------------------------------------------------------------------------
   // Reset + close
@@ -302,7 +302,7 @@ export function TransferDialog({
               error={!!fieldErrors.toAccountNumber}
               helperText={
                 fieldErrors.toAccountNumber ??
-                "Format: 311 followed by 10 digits"
+                "Format: SMX followed by 10 digits"
               }
               fullWidth
               autoComplete="off"

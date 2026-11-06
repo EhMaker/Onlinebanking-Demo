@@ -64,7 +64,7 @@ export function LandingPage() {
         <Box
           component="img"
           src={logo}
-          alt="Jeonbuuk Bank logo"
+          alt="SmExPay Bank logo"
           sx={{
             display: "block",
             width: { xs: 180, sm: 230 },

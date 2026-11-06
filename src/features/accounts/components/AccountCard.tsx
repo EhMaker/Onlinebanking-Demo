@@ -115,7 +115,7 @@ export function AccountCard({ account, profile, isLoading }: AccountCardProps) {
               letterSpacing: 0.5,
             }}
           >
-            Jeonbuuk Bank
+            SmExPay Bank
           </Typography>
           {isLoading ? null : (
             <Chip

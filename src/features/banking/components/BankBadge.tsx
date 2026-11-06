@@ -5,7 +5,7 @@ import bankLogo from "@/assets/logo_transparent_background.png";
 
 interface BankBadgeProps {
   bank: BankInfo;
-  /** Whether the account belongs to Jeonbuuk (internal transfer) */
+  /** Whether the account belongs to SmExPay (internal transfer) */
   isInternal?: boolean;
   /** compact = just the badge pill; full = row with description */
   variant?: "compact" | "full";

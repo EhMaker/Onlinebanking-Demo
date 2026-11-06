@@ -67,7 +67,7 @@ export function LoginPage() {
         Welcome back
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Sign in to your Jeonbuuk account
+        Sign in to your SmExPay account
       </Typography>
 
       {authError && (

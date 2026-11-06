@@ -98,7 +98,7 @@ function DrawerContent() {
           <Box
             component="img"
             src={bankLogo}
-            alt="Jeonbuuk Bank logo"
+            alt="SmExPay Bank logo"
             sx={{
               width: 36,
               height: 36,
@@ -113,7 +113,7 @@ function DrawerContent() {
             color="primary.main"
             sx={{ fontWeight: 700, lineHeight: 1.2 }}
           >
-            Jeonbuuk Bank
+            SmExPay Bank
           </Typography>
           <Typography
             variant="caption"

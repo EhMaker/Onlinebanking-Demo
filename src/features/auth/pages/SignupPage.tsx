@@ -27,6 +27,9 @@ export function SignupPage() {
   const [postalCode, setPostalCode] = useState("");
   const [nationality, setNationality] = useState("");
   const [gender, setGender] = useState("");
+  const [nextOfKinName, setNextOfKinName] = useState("");
+  const [nextOfKinRelationship, setNextOfKinRelationship] = useState("");
+  const [nextOfKinPhoneNumber, setNextOfKinPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -42,6 +45,7 @@ export function SignupPage() {
     postalCode?: string;
     nationality?: string;
     gender?: string;
+    nextOfKinPhoneNumber?: string;
     email?: string;
     password?: string;
     confirmPassword?: string;
@@ -67,6 +71,11 @@ export function SignupPage() {
       errors.postalCode = "Enter a valid postal code.";
     if (!nationality.trim()) errors.nationality = "Nationality is required.";
     if (!gender) errors.gender = "Gender is required.";
+    if (
+      nextOfKinPhoneNumber.trim() &&
+      !/^[+]?[\d\s().-]{7,20}$/.test(nextOfKinPhoneNumber.trim())
+    )
+      errors.nextOfKinPhoneNumber = "Enter a valid phone number.";
     if (!email) errors.email = "Email is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       errors.email = "Enter a valid email.";
@@ -101,6 +110,9 @@ export function SignupPage() {
         postalCode,
         nationality,
         gender,
+        nextOfKinName,
+        nextOfKinRelationship,
+        nextOfKinPhoneNumber,
       });
       setSignedUp(true);
     } catch {
@@ -137,7 +149,7 @@ export function SignupPage() {
         Create your account
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Join Jeonbuuk Bank — it's free
+        Join SmExPay Bank — it's free
       </Typography>
 
       {error && (
@@ -253,6 +265,50 @@ export function SignupPage() {
           <MenuItem value="non_binary">Non-binary</MenuItem>
           <MenuItem value="prefer_not_to_say">Prefer not to say</MenuItem>
         </TextField>
+      </Box>
+
+      <Typography variant="subtitle2" sx={{ mb: 1 }}>
+        Next of kin{" "}
+        <Typography component="span" variant="caption" color="text.secondary">
+          (Optional)
+        </Typography>
+      </Typography>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+        Add someone we can contact in an emergency. You can add or change these
+        details later.
+      </Typography>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
+          gap: 2,
+          mb: 2,
+        }}
+      >
+        <TextField
+          label="Full name"
+          value={nextOfKinName}
+          onChange={(e) => setNextOfKinName(e.target.value)}
+          fullWidth
+          autoComplete="name"
+        />
+        <TextField
+          label="Relationship"
+          value={nextOfKinRelationship}
+          onChange={(e) => setNextOfKinRelationship(e.target.value)}
+          fullWidth
+          placeholder="e.g. Spouse, parent, sibling"
+        />
+        <TextField
+          label="Phone number"
+          type="tel"
+          value={nextOfKinPhoneNumber}
+          onChange={(e) => setNextOfKinPhoneNumber(e.target.value)}
+          error={!!fieldErrors.nextOfKinPhoneNumber}
+          helperText={fieldErrors.nextOfKinPhoneNumber}
+          fullWidth
+          autoComplete="tel"
+        />
       </Box>
 
       <TextField

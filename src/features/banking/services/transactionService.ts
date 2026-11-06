@@ -6,13 +6,13 @@ import type { Transaction } from "@/types/banking";
 // ---------------------------------------------------------------------------
 
 /** Valid formats: SMX followed by 10 digits  e.g. SMX0012345678 */
-const ACCOUNT_NUMBER_RE = /^311\d{10}$/i;
+const ACCOUNT_NUMBER_RE = /^SMX\d{10}$/i;
 
 export function validateAccountNumberFormat(value: string): string | null {
   const trimmed = value.trim();
   if (!trimmed) return "Account number is required.";
   if (!ACCOUNT_NUMBER_RE.test(trimmed))
-    return "Account number must be in the format 311 followed by 10 digits (e.g. 3110012345678).";
+    return "Account number must be in the format SMX followed by 10 digits (e.g. SMX0012345678).";
   return null; // valid
 }
 

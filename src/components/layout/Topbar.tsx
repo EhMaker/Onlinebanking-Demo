@@ -42,7 +42,7 @@ export function Topbar({
 }: TopbarProps) {
   const location = useLocation();
   const navigate = useNavigate();
-  const title = PAGE_TITLES[location.pathname] ?? "Jeonbuuk Bank";
+  const title = PAGE_TITLES[location.pathname] ?? "SmExPay Bank";
 
   const { user, profile, avatarPreviewUrl } = useAuthStore();
   const { mode, toggleMode } = useThemeStore();

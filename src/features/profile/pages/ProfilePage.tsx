@@ -149,6 +149,15 @@ export function ProfilePage() {
     gender: metadataValue(metadata, "gender") === "Not provided"
       ? ""
       : metadataValue(metadata, "gender"),
+    nextOfKinName: metadataValue(metadata, "next_of_kin_name") === "Not provided"
+      ? ""
+      : metadataValue(metadata, "next_of_kin_name"),
+    nextOfKinRelationship: metadataValue(metadata, "next_of_kin_relationship") === "Not provided"
+      ? ""
+      : metadataValue(metadata, "next_of_kin_relationship"),
+    nextOfKinPhoneNumber: metadataValue(metadata, "next_of_kin_phone_number") === "Not provided"
+      ? ""
+      : metadataValue(metadata, "next_of_kin_phone_number"),
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const displayedAvatarUrl = avatarPreviewUrl ?? avatarUrl;
@@ -178,6 +187,9 @@ export function ProfilePage() {
           postal_code: form.postalCode.trim(),
           nationality: form.nationality.trim(),
           gender: form.gender,
+          next_of_kin_name: form.nextOfKinName.trim(),
+          next_of_kin_relationship: form.nextOfKinRelationship.trim(),
+          next_of_kin_phone_number: form.nextOfKinPhoneNumber.trim(),
         },
       });
       if (error) throw error;
@@ -444,6 +456,44 @@ export function ProfilePage() {
                         />
                       </Grid>
                     </Grid>
+                    <Box>
+                      <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
+                        Next of kin{" "}
+                        <Typography component="span" variant="caption" color="text.secondary">
+                          (Optional)
+                        </Typography>
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                        Add or change the person we can contact in an emergency.
+                      </Typography>
+                      <Grid container spacing={2}>
+                        <Grid size={{ xs: 12, sm: 4 }}>
+                          <TextField
+                            label="Full name"
+                            value={form.nextOfKinName}
+                            onChange={(event) => updateField("nextOfKinName", event.target.value)}
+                            fullWidth
+                          />
+                        </Grid>
+                        <Grid size={{ xs: 12, sm: 4 }}>
+                          <TextField
+                            label="Relationship"
+                            value={form.nextOfKinRelationship}
+                            onChange={(event) => updateField("nextOfKinRelationship", event.target.value)}
+                            fullWidth
+                          />
+                        </Grid>
+                        <Grid size={{ xs: 12, sm: 4 }}>
+                          <TextField
+                            label="Phone number"
+                            type="tel"
+                            value={form.nextOfKinPhoneNumber}
+                            onChange={(event) => updateField("nextOfKinPhoneNumber", event.target.value)}
+                            fullWidth
+                          />
+                        </Grid>
+                      </Grid>
+                    </Box>
                     <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
                       <Button onClick={() => setIsEditing(false)} disabled={isSaving}>
                         Cancel
@@ -548,6 +598,39 @@ export function ProfilePage() {
                   label="Address"
                   value={address || "Not provided"}
                 />
+              </CardContent>
+            </Card>
+          </FadeIn>
+
+          <FadeIn delay={0.18}>
+            <Card>
+              <CardContent sx={{ p: { xs: 2.5, sm: 3 } }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, mb: 2.5 }}>
+                  Next of kin
+                </Typography>
+                <Grid container spacing={2.5}>
+                  <Grid size={{ xs: 12, sm: 4 }}>
+                    <Detail
+                      icon={<BadgeRounded fontSize="small" />}
+                      label="Full name"
+                      value={metadataValue(metadata, "next_of_kin_name")}
+                    />
+                  </Grid>
+                  <Grid size={{ xs: 12, sm: 4 }}>
+                    <Detail
+                      icon={<BadgeRounded fontSize="small" />}
+                      label="Relationship"
+                      value={metadataValue(metadata, "next_of_kin_relationship")}
+                    />
+                  </Grid>
+                  <Grid size={{ xs: 12, sm: 4 }}>
+                    <Detail
+                      icon={<LocalPhoneRounded fontSize="small" />}
+                      label="Phone number"
+                      value={metadataValue(metadata, "next_of_kin_phone_number")}
+                    />
+                  </Grid>
+                </Grid>
               </CardContent>
             </Card>
           </FadeIn>
