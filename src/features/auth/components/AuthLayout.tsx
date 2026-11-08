@@ -1,6 +1,6 @@
 import { Outlet, Link as RouterLink } from "react-router-dom";
 import { Box, Typography, Paper } from "@mui/material";
-import bankLogo from "@/assets/logo_transparent_background.png";
+import bankLogo from "@/assets/brand_logo.jpeg";
 
 export function AuthLayout() {
   return (

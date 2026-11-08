@@ -6,7 +6,7 @@ import {
 import { Box, Button, Chip, Stack, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import { Link as RouterLink } from "react-router-dom";
-import logo from "@/assets/logo_transparent_background.png";
+import logo from "@/assets/brand_logo.jpeg";
 
 const MotionBox = motion.create(Box);
 

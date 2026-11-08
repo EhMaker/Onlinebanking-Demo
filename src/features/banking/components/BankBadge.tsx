@@ -1,7 +1,7 @@
 import { Box, Typography, Avatar, Chip } from "@mui/material";
 import { AccountBalanceRounded } from "@mui/icons-material";
 import type { BankInfo } from "@/features/banking/data/bankRegistry";
-import bankLogo from "@/assets/logo_transparent_background.png";
+import bankLogo from "@/assets/brand_logo.jpeg";
 
 interface BankBadgeProps {
   bank: BankInfo;

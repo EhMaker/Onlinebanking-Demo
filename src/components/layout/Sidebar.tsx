@@ -21,7 +21,7 @@ import {
   LogoutRounded,
 } from "@mui/icons-material";
 import { useAuthStore } from "@/features/auth/store/authStore";
-import bankLogo from "@/assets/logo_transparent_background.png";
+import bankLogo from "@/assets/brand_logo.jpeg";
 
 interface NavItem {
   label: string;
